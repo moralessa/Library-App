@@ -4,10 +4,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" type='text/css'>
     <title>Odin Library</title>
 </head>
-<body>
-    
+<body >
+
+    <div class="container animate__animated animate__bounceInDown">
+        <header>
+            <div class="leftHead">
+                <img src="images/odin-wink-5f5e98b35ea7282f1e1130f807274780a9d643e3a635595ec9b7fc160266cac3.gif" alt="odin logo">
+                <h1>Odin Library</h1>
+            </div>
+            <div class="rightHead">
+                <h3>Library Log</h3>
+                <p>
+                    Total Books Count: <span id="tbc"></span>
+                    <br><br>
+                    Total Read: <span id="tr"></span>
+                    <br><br>
+                    Total Not Read: <span id="tnr"></span>
+                </p>
+            </div>
+        </header>
+
+        <main>
+            <div class="Intro">
+                <br>
+                <br>
+               <button id="add">
+                   <span class="plus">            &#x2b;            </span>
+                Add Book</button>
+            </div>
+            <br>
+            <div class="cardContainer"></div>
+           
+        </main>
+    </div>
+
+    <div id="formContainer">
+        <div id="overLay"></div>
+        <form id="addNew">
+            <h3>Add New Book</h3>
+            <input type="text" id="title" name="title" placeholder="Title" required>
+            <br><br>
+            <input type="text" id="author" name="author" placeholder="Author" required>
+            <br><br>
+            <input type="number" id="numPages" name="numPages" placeholder="Pages" required>
+            <br><br>
+            <input type="url" name="cover" id="cover" placeholder="Cover URL *optional">
+            <br><br>
+            <label for="read">Read Before?</label>
+            <input type="checkbox" name="Prev Read" id="read">
+            <br><br>
+            <button id="submit" type="submit">Add</button>
+        </form>
+    </div>
+   
 
     <script src="app.js"></script>
 </body>

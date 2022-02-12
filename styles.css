@@ -1,0 +1,229 @@
+:root{
+    --contianerBorder: #e06161;
+    --highlight: #dc2626;
+    --cardBgColor: #e2e8f0;
+}
+
+*, *::after, *:before{
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: wheat;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #27272a;
+}
+
+
+.container{
+    background-color: white;
+    margin: 5% 5%;
+    width: 90%;
+    border-radius: 15px;
+    border: 10px solid var(--contianerBorder);
+    min-height: 60vh;
+}
+
+
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem;
+    width: 100%;
+    font-family: 'Oswald', Arial, Helvetica, sans-serif;
+}
+
+
+
+header img {
+    width: 200px;
+}
+
+
+.leftHead{
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.rightHead{
+    margin-top: 2%;
+    width: 50%;
+    text-align: center;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+.Intro{
+    display: grid;
+    justify-items: center;
+}
+
+
+.plus{
+    font-size: 5rem;
+    margin-right: .2rem;
+}
+
+#add{
+    background-color: transparent;
+    border: none;
+    display:flex;
+    align-items: center;
+    font-size: 2rem;
+    transition: all 400ms ease-in-out;
+    border-radius: 15px;
+}
+
+#add:hover{
+    cursor: pointer;
+    background-color: var(--contianerBorder);
+    color: white;
+    border: 1px solid #27272a;
+}
+
+
+.card{
+    text-align: center;
+    background-color: #74747c;
+    color: #e2e8f0;
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 15px;
+    border: 3px solid #ecfdf5;
+    transition: all 500ms ease-in;
+    width: 280px;
+    height: 430px;
+}
+
+.cardImage{
+    width: 100px;
+    height: auto;
+    max-height: 150px;
+}
+
+.cardContainer{
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.readToggleR{
+    font-size: 1.5rem;
+    width: 70%;
+    font-family: inherit;
+    border-radius: 5px;
+    background-color: #78dd9c;
+    color: white;
+    padding: .2rem;
+    transition: all 200ms ease-in-out;
+}
+
+.readToggleR:hover{
+    border: 1px solid white;
+    opacity: .8;
+    cursor:pointer;
+    
+}
+
+.readToggleNR{
+    font-size: 1.5rem;
+    width: 70%;
+    font-family: inherit;
+    border-radius: 5px;
+    background-color: var(--contianerBorder);
+    color: white;
+    padding: .2rem;
+    transition: all 200ms ease-in-out;
+}
+
+.readToggleNR:hover{
+    border: 1px solid white;
+    opacity: .8;
+    cursor:pointer;
+    
+}
+
+#addNew {
+    display: block;
+    text-align: center;
+    background-color: var(--cardBgColor);
+    font-size: 1.5rem;
+    position: fixed;
+    top: 20vh;
+    border-radius: 15px;
+    border: 3px solid #27272a;
+    transition: all 500ms ease-in;
+    height: 450px;
+    width: 350px;
+    z-index: 3;
+}
+
+#formContainer{
+    display: none;
+    justify-content: center;
+}
+
+#overLay{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.267);
+    z-index: 2;
+    cursor:pointer;
+}
+
+#submit{
+    background-color: var(--contianerBorder);
+    border: 1px solid white;
+    color:white;
+    font-size: 1.5rem;
+    padding: .2rem;
+    width: 200px;
+    border-radius: 5px;
+    transition: all 200ms ease-in-out;
+}
+
+#submit:hover{
+    background-color: inherit;
+    color: var(--contianerBorder);
+    cursor:pointer;
+    border: 1px solid var(--contianerBorder)
+}
+
+#r{
+    height: 1rem;
+}
+
+::placeholder{
+    font-size: 1.2rem;
+    color: var(--contianerBorder);
+    opacity: .6;
+}
+
+input{
+    padding: 10px;
+    height: 2rem;
+    font-size: 1.2rem;
+    color: #27272a;
+}
+
+#read{
+    height: 1rem;
+}
