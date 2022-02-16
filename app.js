@@ -155,6 +155,7 @@ function addBookToLibrary(book){
                 bookCard.remove();
                 let index = myLibrary.indexOf(book);
                 myLibrary.splice(index, 1);
+                upDateLogAndButtons();
             }
         })
     })
