@@ -78,6 +78,7 @@ form.addEventListener('submit', (e) =>{
     e.preventDefault();
     let b = createBook();
     addBookToLibrary(b);
+    upDateLogAndButtons();
     overLay.style.display = 'none';
     formContainer.style.display ='none';
     e.target.reset();
