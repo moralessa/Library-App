@@ -13,7 +13,7 @@ const form = document.getElementById('addNew');
 const formContainer = document.getElementById('formContainer')
 const overLay = document.getElementById('overLay');
 const submit = document.getElementById('submit');
-let readButtons = document.querySelectorAll('.readButton');
+
 
 //Book constructor function
 function Book(title, author, pageCount, read, cover){
@@ -41,11 +41,9 @@ function upDateLogAndButtons(){
     logTbc.textContent = myLibrary.length;
     logTr.textContent = totalReadCount.length;
     logTnr.textContent = totalNotReadCount.length;
-    readButtons = document.querySelectorAll('.readButton');
 }
 
 function createBook(){
-    console.log(readInput.checked)
    if(coverInput.validity.valid === true){
        if(readInput.checked){
            let newBook = new Book(titleInput.value, authorInput.value, pageInput.value, true, coverInput.value);
@@ -82,6 +80,7 @@ form.addEventListener('submit', (e) =>{
     addBookToLibrary(b);
     overLay.style.display = 'none';
     formContainer.style.display ='none';
+    e.target.reset();
 })
 
 
@@ -89,6 +88,7 @@ function addBookToLibrary(book){
     let createdDiv = document.createElement('div');
     createdDiv.classList.add('card');
     let cover = document.createElement('img');
+    let remove = document.createElement('p');
     let title = document.createElement('p');
     let author = document.createElement('p');
     let pages = document.createElement('p');
@@ -97,17 +97,18 @@ function addBookToLibrary(book){
     title.textContent = `Title: ${book.Title}`;
     author.textContent = `Author: ${book.Author}`;
     pages.textContent = `Pages: ${book.Pages}`;
+    remove.textContent = 'X';
+    remove.classList.add('remove');
 
     if(book.Read){
+        readToggle.classList.add('readButton');
         readToggle.textContent = 'Read';
         readToggle.classList.add('readToggleR');
-        readToggle.classList.add('readButton');
-
 
     }else{
+        readToggle.classList.add('readButton');
         readToggle.textContent = "Not Read";
         readToggle.classList.add('readToggleNR');
-        readToggle.classList.add('readButton');
     }
 
     if(book.Url != ''){
@@ -126,30 +127,39 @@ function addBookToLibrary(book){
     createdDiv.appendChild(author);
     createdDiv.appendChild(pages);
     createdDiv.appendChild(readToggle);
+    createdDiv.appendChild(remove);
     cardContainer.appendChild(createdDiv);
-    upDateLogAndButtons();
-}
-
-let greenEggs = new Book('Green Eggs & Ham', 'Dr.Seuss', 62, true, 'images/712nTmzFFRL.jpg')
-addBookToLibrary(greenEggs);
-
-readButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        let bookCard = btn.parentElement;
+    readToggle.addEventListener('click', function(){
+        let bookCard = readToggle.parentElement;
         myLibrary.forEach(book => {
             if(book.BookId == bookCard.id && book.Read == true){
                 book.Read = false;
-                btn.classList.add('readToggleNR');
-                btn.classList.remove('readToggleR');
-                btn.textContent = 'Not Read';
+                readToggle.classList.add('readToggleNR');
+                readToggle.classList.remove('readToggleR');
+                readToggle.textContent = 'Not Read';
                 upDateLogAndButtons();
             }else if(book.BookId == bookCard.id && book.Read == false){
                 book.Read = true;
-                btn.classList.add('readToggleR');
-                btn.classList.remove('readToggleNR');
-                btn.textContent = 'Read';
+                readToggle.classList.add('readToggleR');
+                readToggle.classList.remove('readToggleNR');
+                readToggle.textContent = 'Read';
                 upDateLogAndButtons();
             }
         })
     })
-});
+    remove.addEventListener('click', function(){
+        let bookCard = remove.parentElement;
+        myLibrary.forEach(book =>{
+            if(book.BookId == bookCard.id){
+                bookCard.remove();
+                let index = myLibrary.indexOf(book);
+                myLibrary.splice(index, 1);
+            }
+        })
+    })
+}
+
+let greenEggs = new Book('Green Eggs & Ham', 'Dr.Seuss', 62, true, 'images/712nTmzFFRL.jpg')
+addBookToLibrary(greenEggs);
+upDateLogAndButtons();
+
