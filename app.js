@@ -15,18 +15,20 @@ const overLay = document.getElementById('overLay');
 const submit = document.getElementById('submit');
 
 
-//Book constructor function
-function Book(title, author, pageCount, read, cover){
-    this.Title = title;
-    this.Author = author;
-    this.Pages = pageCount;
-    this.Read = read;
-    this.Url = cover;
-}
+//Book class function
+class Book{
+    constructor(title, author, pageCount, read, cover){
+        this.Title = title;
+        this.Author = author;
+        this.Pages = pageCount;
+        this.Read = read;
+        this.Url = cover;
+    }
 
-Book.prototype.beInserted = function(arr){
-    this.BookId = 'bookId-'+arr.length;
-    arr.push(this);
+    beInserted(arr){
+        this.BookId = 'bookId-'+arr.length;
+        arr.push(this);
+    }
 }
 
 
