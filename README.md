@@ -1,3 +1,3 @@
-# OdinProject-Library-Project
-This is my version of the Odin Project Assignment labeled 'Library'. I did this by using the programming paradigm of Object Oriented Programming using javascript with its use of 'prototype' to replace the class system from other Object oriented programming languages such as C++ and Java. I also used HTML and CSS to make not just a effecient but also visually appealing minimal application. 
+# Library-App
+Library app built using HTML, CSS, and Javascript. I made use of object oriented principles (OOP) in Javascript using the prototype object as it differs from other programming languages which use a class system for OO programming. 
 [Live Demo](https://moralessa.github.io/Library-App/) :point_left:
