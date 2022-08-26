@@ -1,4 +1,5 @@
-let myLibrary = [];
+let library = {};
+let coverSrc;
 const btnAdd = document.getElementById('add');
 const logTbc = document.getElementById('tbc');
 const logTr = document.getElementById('tr');
@@ -8,86 +9,95 @@ const authorInput = document.getElementById('author');
 const pageInput = document.getElementById('numPages');
 const readInput = document.getElementById('read');
 const coverInput = document.getElementById('cover');
+const coverLabel = document.querySelector('label[for="cover"]');
 const cardContainer = document.querySelector('.cardContainer');
 const form = document.getElementById('addNew');
 const formContainer = document.getElementById('formContainer')
 const overLay = document.getElementById('overLay');
 const submit = document.getElementById('submit');
 
-
-//Book constructor function
-function Book(title, author, pageCount, read, cover){
-    this.Title = title;
-    this.Author = author;
-    this.Pages = pageCount;
-    this.Read = read;
-    this.Url = cover;
-}
-
-Book.prototype.beInserted = function(arr){
-    this.BookId = 'bookId-'+arr.length;
-    arr.push(this);
-}
-
-
-function upDateLogAndButtons(){
-    let totalReadCount = myLibrary.filter(function(item){
-        return item.Read === true;
-    })
-    
-    let totalNotReadCount = myLibrary.filter(function(item){
-        return item.Read === false;
-    })
-    logTbc.textContent = myLibrary.length;
-    logTr.textContent = totalReadCount.length;
-    logTnr.textContent = totalNotReadCount.length;
-}
-
-function createBook(){
-   if(coverInput.validity.valid === true){
-       if(readInput.checked){
-           let newBook = new Book(titleInput.value, authorInput.value, pageInput.value, true, coverInput.value);
-           return newBook;
-       }else{
-            let newBook = new Book(titleInput.value, authorInput.value, pageInput.value, false, coverInput.value);
-            return newBook;
-       }
-   }else{
-    if(readInput.checked){
-        let newBook = new Book(titleInput.value, authorInput.value, pageInput.value, true, '');
-        return newBook;
-    }else{
-         let newBook = new Book(titleInput.value, authorInput.value, pageInput.value, false, '');
-         return newBook;
-    }
-   }
-}
-
-btnAdd.addEventListener('click', () =>{
+btnAdd.addEventListener('click', () =>{ // Form toggle event listener
     overLay.style.display = 'block';
     formContainer.style.display ='flex';
 })
 
-
-overLay.addEventListener('click', () =>{
+overLay.addEventListener('click', () =>{ // overlay click event listener
     overLay.style.display = 'none';
     formContainer.style.display ='none';
 })
 
-form.addEventListener('submit', (e) =>{
+coverInput.addEventListener('change', () =>{
+    if(coverInput.validity.valid == true){
+        coverLabel.style.backgroundColor = '';
+        coverLabel.style.color = '';
+        coverLabel.textContent = 'Cover Inserted!'
+        const reader = new FileReader();
+        reader.readAsDataURL(coverInput.files[0]);
+
+        reader.addEventListener("load", () =>{
+            coverSrc = reader.result;
+        })
+    }
+})
+
+form.addEventListener('submit', (e) =>{ // Form submission event listener
     e.preventDefault();
-    let b = createBook();
-    addBookToLibrary(b);
-    upDateLogAndButtons();
+    insertBook(titleInput.value, authorInput.value, pageInput.value, readInput.checked, coverSrc, `book-id-${library['book-count']}`);
     overLay.style.display = 'none';
     formContainer.style.display ='none';
     e.target.reset();
 })
 
+class Book{ // Book Constructor
+    constructor(title, author, pageCount, read, cover, id){
+        this.Title = title;
+        this.Author = author;
+        this.Pages = pageCount;
+        this.Read = read;
+        this.Url = cover;
+        this.id = id;
+    }
+}
 
-function addBookToLibrary(book){
-    let createdDiv = document.createElement('div');
-    createdDiv.classList.add('card');
+function insertBook(title, input, pageCount, read, cover, id){ // function to insert book to libary
+        let newBook = new Book(title, input, pageCount, read, cover, id);
+        library[newBook.id] = newBook;
+        library['book-count'] += library['book-count'];
+        upDateLogAndButtons();
+        updateLocaleStorage();
+        populateSingleBook(newBook);
+}
+
+function updateLocaleStorage(){ // function to update data from locale storage
+    let data = JSON.stringify(library);
+    localStorage.setItem('library', data);
+}
+
+function loadLocaleStorage(){ // function to load data from locale storage
+    return localStorage.getItem('library');
+}
+
+function upDateLogAndButtons(){ // function to updata log ui
+    let readCount = 0;
+    let notReadCount = 0; 
+    let total = Object.keys(library).length;
+    for(book in library){
+        if(book !== 'book-count'){
+            if(library[book].Read){
+                readCount++;
+            }else{
+                notReadCount++;
+            }
+        }
+   }
+    logTbc.textContent = total;
+    logTr.textContent = readCount;
+    logTnr.textContent = notReadCount;
+}
+
+function populateSingleBook(book){ // function to populate single book ui
+    let createdCard = document.createElement('div');
+    createdCard.classList.add('card');
     let cover = document.createElement('img');
     let remove = document.createElement('p');
     let title = document.createElement('p');
@@ -105,63 +115,71 @@ function addBookToLibrary(book){
         readToggle.classList.add('readButton');
         readToggle.textContent = 'Read';
         readToggle.classList.add('readToggleR');
-
     }else{
         readToggle.classList.add('readButton');
         readToggle.textContent = "Not Read";
         readToggle.classList.add('readToggleNR');
     }
 
-    if(book.Url != ''){
+    if(book.Url){
         cover.src = book.Url;
         cover.classList.add('cardImage')
     }else{
         cover.src = "images/mediamodifier-kML003ksO_0-unsplash.jpg";
         cover.classList.add('cardImage')
-
     }
 
-    book.beInserted(myLibrary);
-    createdDiv.setAttribute("id", `${book.BookId}`);
-    createdDiv.appendChild(cover);
-    createdDiv.appendChild(title);
-    createdDiv.appendChild(author);
-    createdDiv.appendChild(pages);
-    createdDiv.appendChild(readToggle);
-    createdDiv.appendChild(remove);
-    cardContainer.appendChild(createdDiv);
-    readToggle.addEventListener('click', function(){
-        let bookCard = readToggle.parentElement;
-        myLibrary.forEach(book => {
-            if(book.BookId == bookCard.id && book.Read == true){
-                book.Read = false;
-                readToggle.classList.add('readToggleNR');
-                readToggle.classList.remove('readToggleR');
-                readToggle.textContent = 'Not Read';
-                upDateLogAndButtons();
-            }else if(book.BookId == bookCard.id && book.Read == false){
-                book.Read = true;
-                readToggle.classList.add('readToggleR');
-                readToggle.classList.remove('readToggleNR');
-                readToggle.textContent = 'Read';
-                upDateLogAndButtons();
-            }
-        })
+    createdCard.setAttribute("id", `book-id-${book.id}`);
+    createdCard.append(cover, title, author, pages, readToggle, remove); 
+    cardContainer.append(createdCard);
+    readToggle.addEventListener('click', (e) =>{
+        if(e.target.classList.contains('readToggleR')){
+            book.Read = false;
+            e.target.classList.remove('readToggleR');
+            e.target.classList.add('readToggleNR');
+            readToggle.textContent = 'Not Read';
+            upDateLogAndButtons();
+            updateLocaleStorage();
+        }else{
+            book.Read = true;
+            e.target.classList.remove('readToggleNR');
+            e.target.classList.add('readToggleR');
+            readToggle.textContent = 'Read';
+            upDateLogAndButtons();
+            updateLocaleStorage();
+        }
     })
-    remove.addEventListener('click', function(){
-        let bookCard = remove.parentElement;
-        myLibrary.forEach(book =>{
-            if(book.BookId == bookCard.id){
-                bookCard.remove();
-                let index = myLibrary.indexOf(book);
-                myLibrary.splice(index, 1);
-                upDateLogAndButtons();
-            }
-        })
+    
+    remove.addEventListener('click', () =>{
+        delete library[book.id];
+        createdCard.remove();
+        updateLocaleStorage();
+        upDateLogAndButtons();
     })
 }
 
-let greenEggs = new Book('Green Eggs & Ham', 'Dr.Seuss', 62, true, 'images/712nTmzFFRL.jpg')
-addBookToLibrary(greenEggs);
-upDateLogAndButtons();
+function populateLibrary(){ // Function to populate library ui
+    for(book in library){
+        if(book !== 'book-count'){
+            populateSingleBook(library[book]);
+        }
+    }
+}
+
+
+
+if(loadLocaleStorage()){
+    let data = JSON.parse(loadLocaleStorage());
+    library = data;
+    populateLibrary();
+    upDateLogAndButtons();
+    console.log(library);
+}else{
+    insertBook('Green Eggs & Ham', 'Dr.Seuss', 62, true, 'images/712nTmzFFRL.jpg', `book-id-0`);
+    insertBook('Harry Potter and the Sorcerer\'s Stone' , 'J.K Rowling', 233, false, 'images/harry potter.jpg', `book-id-1`);
+    insertBook('The Hunger Games', 'Suzanne Collins', 384, true, 'images/9450-orig.jpg', `book-id-2`);
+    library['book-count'] = 3;
+    upDateLogAndButtons();
+    console.log(library);
+}
 
