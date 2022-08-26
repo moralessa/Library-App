@@ -173,13 +173,11 @@ if(loadLocaleStorage()){
     library = data;
     populateLibrary();
     upDateLogAndButtons();
-    console.log(library);
 }else{
     insertBook('Green Eggs & Ham', 'Dr.Seuss', 62, true, 'images/712nTmzFFRL.jpg', `book-id-0`);
     insertBook('Harry Potter and the Sorcerer\'s Stone' , 'J.K Rowling', 233, false, 'images/harry potter.jpg', `book-id-1`);
     insertBook('The Hunger Games', 'Suzanne Collins', 384, true, 'images/9450-orig.jpg', `book-id-2`);
     library['book-count'] = 3;
     upDateLogAndButtons();
-    console.log(library);
 }
 
