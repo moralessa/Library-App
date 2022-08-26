@@ -59,9 +59,11 @@
             <br><br>
             <input type="text" id="author" name="author" placeholder="Author" required>
             <br><br>
-            <input type="number" id="numPages" name="numPages" placeholder="Pages" required>
+            <input type="number" id="numPages" name="numPages" min="0" placeholder="Pages" required>
             <br><br>
-            <input type="url" name="cover" id="cover" placeholder="Cover URL *optional">
+            <label for="cover">Insert Cover
+            </label>
+            <input type="file" name="cover" id="cover" accept="image/png, image/gif, image/jpeg,  image/jpg">
             <br><br>
             <label for="read">Read Before?</label>
             <input type="checkbox" name="Prev Read" id="read">
@@ -72,5 +74,6 @@
    
 
     <script src="app.js"></script>
+    <!-- <script src="newapp.js"></script> -->
 </body>
 </html>
