@@ -80,7 +80,7 @@ function loadLocaleStorage(){ // function to load data from locale storage
 function upDateLogAndButtons(){ // function to updata log ui
     let readCount = 0;
     let notReadCount = 0; 
-    let total = Object.keys(library).length;
+    let total = Object.keys(library).length - 1;
     for(book in library){
         if(book !== 'book-count'){
             if(library[book].Read){
