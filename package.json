@@ -1,0 +1,24 @@
+{
+  "name": "library-app",
+  "version": "1.0.0",
+  "description": "Simple Library App that stores books on local storage",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moralessa/Library-App.git"
+  },
+  "author": "Samuel Morales <sam@moralessa.dev>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moralessa/Library-App/issues"
+  },
+  "homepage": "https://github.com/moralessa/Library-App#readme",
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
