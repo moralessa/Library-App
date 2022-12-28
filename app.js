@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-undef */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
 /* eslint linebreak-style: ["error", "windows"] */
 let library = {};
